@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rook-ceph
+spec:
+  chartRef:
+    kind: HelmRepository
+    name: rook-release
+  chart: rook-ceph
+  interval: 1h
+  values:
+    # Rook operator configuration
+    # Official documentation: https://rook.io/docs/rook/latest-release/Helm-Charts/operator-chart/
+
+    # Image configuration
+    image:
+      repository: docker.io/rook/ceph
+      tag: master
+      pullPolicy: IfNotPresent
+
+    # Enable CRDs creation (required for first deployment)
+    # WARNING: Only set during first deployment. If later disabled the cluster may be DESTROYED
+    crds:
+      enabled: true
+
+    # CSI driver configuration
+    csi:
+      enableRbdDriver: true
+      enableCephfsDriver: true
+      # CephFS attach required (set to false to skip attach operations for CephFS PVCs)
+      cephFSAttachRequired: true
+      # CephFS FSGroup policy: None, File, or Always
+      cephFSFSGroupPolicy: "File"
+      # CephFS plugin update strategy
+      cephFSPluginUpdateStrategy: RollingUpdate
+
+    # RBAC configuration
+    rbacEnable: true
+
+    # Log level: ERROR, WARNING, INFO, DEBUG
+    logLevel: "INFO"
+
+    # Resources for operator pod
+    resources:
+      limits:
+        memory: "512Mi"
+      requests:
+        cpu: "200m"
+        memory: "128Mi"
+
+    # Container security context
+    containerSecurityContext:
+      capabilities:
+        drop:
+          - "ALL"
+      runAsGroup: 2016
+      runAsNonRoot: true
+      runAsUser: 2016
+
+    # Monitoring (requires Prometheus to be pre-installed)
+    monitoring:
+      enabled: false
+
+    # Note: After operator is installed, you need to create a CephCluster CR
+    # See: https://rook.github.io/docs/rook/latest-release/CRDs/Cluster/ceph-cluster-crd/
+    # Example CephCluster CR is provided in cephcluster.yaml
+

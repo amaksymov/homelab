@@ -1,0 +1,11 @@
+---
+# Official Helm repository as per Rook documentation:
+# https://rook.io/docs/rook/latest-release/Helm-Charts/operator-chart/
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: rook-release
+spec:
+  interval: 15m
+  url: https://charts.rook.io/release
+
