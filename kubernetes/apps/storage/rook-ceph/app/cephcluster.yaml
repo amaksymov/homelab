@@ -52,7 +52,3 @@ spec:
     provider: host
   crashCollector:
     disable: false
-  # CSI configuration
-  csi:
-    enableRbdDriver: true
-    enableCephfsDriver: true
