@@ -7,53 +7,52 @@
 #
 # WARNING: Make sure sda is NOT your system/boot disk!
 # This configuration uses sda disk on all nodes for Ceph storage.
-#
-# apiVersion: ceph.rook.io/v1
-# kind: CephCluster
-# metadata:
-#   name: rook-ceph
-#   namespace: storage
-# spec:
-#   cephVersion:
-#     # Use latest stable Ceph version
-#     # Check available versions: https://quay.io/repository/ceph/ceph?tab=tags
-#     image: quay.io/ceph/ceph:v18.2.0
-#     allowUnsupported: false
-#   dataDirHostPath: /var/lib/rook
-#   mon:
-#     count: 3
-#     allowMultiplePerNode: false
-#   storage:
-#     # Use all nodes in the cluster
-#     useAllNodes: true
-#     # Don't use all devices, only specific ones
-#     useAllDevices: false
-#     # Use only sda disk on all nodes
-#     # Use deviceFilter for regex pattern matching
-#     deviceFilter: "^sda$"
-#     # Alternative: specify devices explicitly per node (if needed)
-#     # nodes:
-#     #   - name: "192.168.0.11"
-#     #     devices:
-#     #       - name: "sda"
-#     #   - name: "192.168.0.12"
-#     #     devices:
-#     #       - name: "sda"
-#     #   - name: "192.168.0.13"
-#     #     devices:
-#     #       - name: "sda"
-#   mgr:
-#     count: 1
-#   dashboard:
-#     enabled: true
-#   monitoring:
-#     enabled: false
-#   network:
-#     provider: host
-#   crashCollector:
-#     disable: false
-#   # CSI configuration
-#   csi:
-#     enableRbdDriver: true
-#     enableCephfsDriver: true
 
+apiVersion: ceph.rook.io/v1
+kind: CephCluster
+metadata:
+  name: rook-ceph
+  namespace: storage
+spec:
+  cephVersion:
+    # Use latest stable Ceph version
+    # Check available versions: https://quay.io/repository/ceph/ceph?tab=tags
+    image: quay.io/ceph/ceph:v18.2.0
+    allowUnsupported: false
+  dataDirHostPath: /var/lib/rook
+  mon:
+    count: 3
+    allowMultiplePerNode: false
+  storage:
+    # Use all nodes in the cluster
+    useAllNodes: true
+    # Don't use all devices, only specific ones
+    useAllDevices: false
+    # Use only sda disk on all nodes
+    # Use deviceFilter for regex pattern matching
+    deviceFilter: "^sda$"
+    # Alternative: specify devices explicitly per node (if needed)
+    # nodes:
+    #   - name: "192.168.0.11"
+    #     devices:
+    #       - name: "sda"
+    #   - name: "192.168.0.12"
+    #     devices:
+    #       - name: "sda"
+    #   - name: "192.168.0.13"
+    #     devices:
+    #       - name: "sda"
+  mgr:
+    count: 1
+  dashboard:
+    enabled: true
+  monitoring:
+    enabled: false
+  network:
+    provider: host
+  crashCollector:
+    disable: false
+  # CSI configuration
+  csi:
+    enableRbdDriver: true
+    enableCephfsDriver: true
