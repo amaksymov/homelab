@@ -4,10 +4,13 @@ kind: HelmRelease
 metadata:
   name: rook-ceph
 spec:
-  chartRef:
-    kind: HelmRepository
-    name: rook-release
-  chart: rook-ceph
+  chart:
+    spec:
+      chart: rook-ceph
+      sourceRef:
+        kind: HelmRepository
+        name: rook-release
+        namespace: storage
   interval: 1h
   values:
     # Rook operator configuration
