@@ -17,9 +17,11 @@ spec:
     # Official documentation: https://rook.io/docs/rook/latest-release/Helm-Charts/operator-chart/
 
     # Image configuration
+    # Version: v1.18.8 (compatible with Ceph 19.2.0+)
+    # Check releases: https://github.com/rook/rook/releases
     image:
       repository: docker.io/rook/ceph
-      tag: master
+      tag: v1.18.8
       pullPolicy: IfNotPresent
 
     # Enable CRDs creation (required for first deployment)
