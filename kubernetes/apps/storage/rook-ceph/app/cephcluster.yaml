@@ -17,7 +17,8 @@ spec:
   cephVersion:
     # Use latest stable Ceph version
     # Check available versions: https://quay.io/repository/ceph/ceph?tab=tags
-    image: quay.io/ceph/ceph:v18.2.0
+    # Minimum required version for current Rook operator: 19.2.0
+    image: quay.io/ceph/ceph:v19.2.0
     allowUnsupported: false
   dataDirHostPath: /var/lib/rook
   mon:
