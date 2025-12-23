@@ -26,24 +26,22 @@ spec:
     count: 3
     allowMultiplePerNode: false
   storage:
-    # Use all nodes in the cluster
-    useAllNodes: true
-    # Don't use all devices, only specific ones
-    useAllDevices: false
-    # Use only sda disk on all nodes
-    # Use deviceFilter for regex pattern matching
-    deviceFilter: "^sda$"
-    # Alternative: specify devices explicitly per node (if needed)
-    # nodes:
-    #   - name: "192.168.0.11"
-    #     devices:
-    #       - name: "sda"
-    #   - name: "192.168.0.12"
-    #     devices:
-    #       - name: "sda"
-    #   - name: "192.168.0.13"
-    #     devices:
-    #       - name: "sda"
+    config:
+      # Use bluestore (default, but explicit for clarity)
+      storeType: "bluestore"
+    # Specify devices for each node (required when disk has partitions)
+    # WARNING: This will use the entire sda disk in raw mode and may wipe partitions!
+    # Make sure sda is NOT your system/boot disk!
+    nodes:
+      - name: "talos-1"
+        devices:
+          - name: "sda"
+      - name: "talos-2"
+        devices:
+          - name: "sda"
+      - name: "talos-3"
+        devices:
+          - name: "sda"
   mgr:
     count: 1
   dashboard:
